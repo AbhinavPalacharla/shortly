@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,7 +8,22 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        String @id @default(cuid())
+  firstname String
+  lastname  String
+  email     String @unique
+  password  String
+  owner     Link[] @relation("owned")
+  links     Link[]
+}
+
+model Link {
+  id   String @id @default(cuid())
+  uid  String @unique
+  link String @unique
+
+  owner User   @relation("owned", fields: [userId], references: [id], onDelete: Cascade)
+  users User[]
+
+  userId String
 }
