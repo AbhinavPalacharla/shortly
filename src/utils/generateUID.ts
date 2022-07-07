@@ -1,5 +1,5 @@
 import { customAlphabet } from "nanoid";
 
 export const generateUID = () => {
-  return customAlphabet("ABCDEFGHJKMNPQRSTUVWXYZ23456789", 7)();
+  return customAlphabet("ABCDEFGHJKMNPQRSTUVWXYZ23456789", 6)();
 };

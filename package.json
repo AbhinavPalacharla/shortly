@@ -9,18 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^4.0.0",
+    "@heroicons/react": "^1.0.6",
+    "@radix-ui/react-toast": "^0.1.1",
     "@trpc/client": "^9.25.3",
     "@trpc/next": "^9.25.3",
     "@trpc/react": "^9.25.3",
     "@trpc/server": "^9.25.3",
+    "formik": "^2.2.9",
     "inspx": "^0.0.1-alpha.6",
     "nanoid": "^4.0.0",
     "next": "12.2.0",
-    "prisma": "^4.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
     "react-query": "^3.39.1",
+    "redis": "^4.1.1",
+    "trpc": "^0.11.3",
     "zod": "^3.17.3"
   },
   "devDependencies": {

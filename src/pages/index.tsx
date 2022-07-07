@@ -1,15 +1,9 @@
-import { trpc } from "../utils/trpc";
+import { IndexPage } from "../components/pages/Index.page";
 
-export default function IndexPage() {
-  const hello = trpc.useQuery(["hello", { text: "abhinav" }]);
-  if (!hello.data) {
-    return <div>Loading...</div>;
-  }
+export default function Index() {
   return (
-    <div>
-      <p className="text-green-300 font-bold underline">
-        {hello.data.greeting}
-      </p>
+    <div className="flex items-center justify-center min-h-screen max-h-screen">
+      <IndexPage />
     </div>
   );
 }

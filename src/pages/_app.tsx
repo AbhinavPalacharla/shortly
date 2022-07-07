@@ -3,11 +3,17 @@ import { withTRPC } from "@trpc/next";
 import { AppType } from "next/dist/shared/lib/utils";
 import { AppRouter } from "./api/trpc/[trpc]";
 import Inspect from "inspx";
+import * as Toast from "@radix-ui/react-toast";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
     <Inspect>
-      <Component {...pageProps} />
+      <Toast.Provider swipeThreshold={50} swipeDirection="left">
+        <Component {...pageProps} />
+      </Toast.Provider>
     </Inspect>
   );
 };
