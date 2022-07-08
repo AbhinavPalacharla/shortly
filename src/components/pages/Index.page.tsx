@@ -78,13 +78,14 @@ export const IndexPage: FC = () => {
                 <div className="flex flex-row shadow-md shadow-gray-500/10 ring-1 ring-black/5 rounded-lg py-2 mb-4 items-center">
                   <div className="bg-green-300 h-2 w-2 rounded-full shadow-md shadow-green-400/50 ml-3 mr-3" />
                   <Toast.Description className="mr-3">
-                    Link shortened @ https://shortly.com/{codes[index]}
+                    Link shortened @ https://shortly-zeta.vercel.app/
+                    {codes[index]}
                   </Toast.Description>
                   <button
                     className="bg-white shadow-sm shadow-gray-500/10 hover:shadow-gray-500/20 hover:bg-gray-50 ring-1 ring-black/10 flex flex-row px-2 py-1 rounded-md items-center mr-3 transition duration-200 ease-in-out"
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `https://shortly.com/${codes[index]}`
+                        `https://shortly-zeta.vercel.app/${codes[index]}`
                       );
                     }}
                   >
