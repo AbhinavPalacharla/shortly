@@ -30,7 +30,7 @@ export default withTRPC<AppRouter>({
     //   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
     //   : "http://localhost:3000/api/trpc";
 
-    const url = "shortly-zeta.vercel.app/api/trpc";
+    const url = "https://shortly-zeta.vercel.app/api/trpc";
     return {
       url,
       /**
