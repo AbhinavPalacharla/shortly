@@ -36,14 +36,22 @@ export const linkRouter = trpc
     input: z.object({
       uid: z.string().length(6),
     }),
-    output: z.string().url(),
+    output: z.string().url().nullish(),
     async resolve({ input: { uid }, ctx: { redis } }) {
-      const url = await redis.get(uid);
+      uid = "MNV5EK";
 
-      if (!url) {
-        return "no url";
+      try {
+        const url = await redis.get(uid);
+
+        console.log("url", url);
+
+        return url;
+      } catch (err) {
+        throw new trpc.TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Could not get link",
+          cause: err,
+        });
       }
-
-      return url;
     },
   });

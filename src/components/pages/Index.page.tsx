@@ -3,11 +3,12 @@ import { trpc } from "../../utils/trpc";
 import { useFormik } from "formik";
 import { IsHttpIndicator } from "components/HttpsIndicator";
 import { CgSpinner } from "react-icons/cg";
+import { MdContentCopy } from "react-icons/md";
 import * as Toast from "@radix-ui/react-toast";
 
 export const IndexPage: FC = () => {
   const [isHttp, setIsHttp] = useState<boolean>(false);
-  const [codes, setCodes] = useState<Array<string | null | undefined>>([""]);
+  const [codes, setCodes] = useState<Array<string>>([]);
   const [savedCount, setSavedCount] = useState(0);
 
   const mutation = trpc.useMutation("link.create");
@@ -18,7 +19,6 @@ export const IndexPage: FC = () => {
     },
     onSubmit: async (values) => {
       setSavedCount((count) => count + 1);
-      console.log("values", values);
       const { url } = values;
       mutation.mutate(
         { url },
@@ -52,7 +52,7 @@ export const IndexPage: FC = () => {
                   ? setIsHttp(true)
                   : setIsHttp(false);
               }}
-              className="rounded-md border-1 border-gray-400 mr-4 px-3 w-60"
+              className="rounded-md mr-4 px-3 w-60 outline-none ring-1 ring-black/5"
             />
             <button
               type="submit"
@@ -70,16 +70,36 @@ export const IndexPage: FC = () => {
           </form>
         </div>
       </div>
-      {codes && (
-        <div>
-          {Array.from({ length: savedCount }).map((_, index) => (
-            <Toast.Root duration={5000}>
-              <Toast.Title>{codes[index]}</Toast.Title>
-            </Toast.Root>
-          ))}
-          <Toast.Viewport />
-        </div>
-      )}
+      <div className="fixed bottom-0 left-0 mb-8 ml-8">
+        {codes && (
+          <div>
+            {Array.from({ length: savedCount }).map((_, index) => (
+              <Toast.Root duration={5000}>
+                <div className="flex flex-row shadow-md shadow-gray-500/10 ring-1 ring-black/5 rounded-lg py-2 mb-4 items-center">
+                  <div className="bg-green-300 h-2 w-2 rounded-full shadow-md shadow-green-400/50 ml-3 mr-3" />
+                  <Toast.Description className="mr-3">
+                    Link shortened @ https://shortly.com/{codes[index]}
+                  </Toast.Description>
+                  <button
+                    className="bg-white shadow-sm shadow-gray-500/10 hover:shadow-gray-500/20 hover:bg-gray-50 ring-1 ring-black/10 flex flex-row px-2 py-1 rounded-md items-center mr-3 transition duration-200 ease-in-out"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `https://shortly.com/${codes[index]}`
+                      );
+                    }}
+                  >
+                    <MdContentCopy className="text-gray-600" />
+                    <p className="text-gray-600 ml-2 text-sm font-normal">
+                      Copy
+                    </p>
+                  </button>
+                </div>
+              </Toast.Root>
+            ))}
+            <Toast.Viewport />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
