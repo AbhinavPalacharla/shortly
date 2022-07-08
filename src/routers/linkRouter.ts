@@ -10,14 +10,28 @@ export const linkRouter = trpc
       url: z.string().url(),
     }),
     output: z.string().length(6).nullish(),
-    async resolve({ input: { url }, ctx: { redis } }) {
-      const data = await redis.get(url);
+    async resolve({ input: { url }, ctx: { redis, prisma } }) {
+      const data = await prisma.link.findUnique({
+        where: {
+          url: url,
+        },
+        select: {
+          uid: true,
+        },
+      });
 
       if (!data) {
         const uid = generateUID();
 
         try {
-          await redis.set(url, uid);
+          await prisma.link.create({
+            data: {
+              uid: uid,
+              url: url,
+            },
+          });
+
+          await redis.set(uid, url);
 
           return uid;
         } catch (err) {
@@ -29,7 +43,7 @@ export const linkRouter = trpc
         }
       }
 
-      return data;
+      return data.uid;
     },
   })
   .query("get", {
@@ -38,7 +52,7 @@ export const linkRouter = trpc
     }),
     output: z.string().url().nullish(),
     async resolve({ input: { uid }, ctx: { redis } }) {
-      uid = "MNV5EK";
+      console.log("uid", uid);
 
       try {
         const url = await redis.get(uid);
