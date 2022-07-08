@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { useFormik } from "formik";
-import { IsHttpIndicator } from "components/HttpsIndicator";
+import { IsHttpIndicator } from "components/HttpsIndicator.component";
 import { CgSpinner } from "react-icons/cg";
 import { MdContentCopy } from "react-icons/md";
 import * as Toast from "@radix-ui/react-toast";
@@ -74,7 +74,7 @@ export const IndexPage: FC = () => {
         {codes && (
           <div>
             {Array.from({ length: savedCount }).map((_, index) => (
-              <Toast.Root duration={5000}>
+              <Toast.Root duration={5000} key={index}>
                 <div className="flex flex-row shadow-md shadow-gray-500/10 ring-1 ring-black/5 rounded-lg py-2 mb-4 items-center">
                   <div className="bg-green-300 h-2 w-2 rounded-full shadow-md shadow-green-400/50 ml-3 mr-3" />
                   <Toast.Description className="mr-3">
